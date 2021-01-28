@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ColPicker/ColPicker.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Theme" id=2]
+PanelContainer/styles/panel = SubResource( 3 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+split_offset = 86
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
+margin_right = 1024.0
+margin_bottom = 232.0
+split_offset = 83
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
+margin_right = 181.0
+margin_bottom = 232.0
+
+[node name="ColPicker" type="VBoxContainer" parent="VSplitContainer/HSplitContainer/PanelContainer"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 180.0
+margin_bottom = 231.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+primary_color = Color( 0.0313726, 0.0901961, 0.105882, 0.819608 )
+secondary_color = Color( 0.701961, 0.027451, 0.027451, 0.454902 )
+
+[node name="PanelContainer2" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
+margin_left = 193.0
+margin_right = 1024.0
+margin_bottom = 232.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="VSplitContainer"]
+margin_top = 244.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
