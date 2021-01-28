@@ -3,6 +3,8 @@ A new open-source Godot Color Picker
 
 # This is a work in progress for a new Color Picker for Godot Engine, download and extract in your project and add ColPicker node to the scene tree.
 
+
+
 # Features:
 it has two colors Primary/Secondary , left mouse button will change the primary color and right mouse button will change the secondary color but also you can use it with only one color by disabling the secondary color.
 can be resized to a minimum of 96x144.
