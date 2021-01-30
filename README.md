@@ -1,7 +1,7 @@
 # godot-colpicker
 A new open-source Godot Color Picker
 
-# This is a work in progress for a new Color Picker for Godot Engine, download and extract in your project and add ColPicker node to the scene tree.
+# This is a work in progress for a new Color Picker for Godot Engine, download and add ColPicker folder to your project then a new ColPicker node will appear in your project.
 
 ![ColPicker](https://user-images.githubusercontent.com/30249150/106095609-bc4c9680-613c-11eb-9fe1-b4b41806ddb0.png)
 
