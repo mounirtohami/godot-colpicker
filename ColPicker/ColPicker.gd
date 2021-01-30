@@ -212,7 +212,7 @@ func col_pos_changed(_index : int) -> void:
 			secondary_stylebox.bg_color = secondary_color
 			_col.material.set_shader_param('hue', secondary_color.h)
 			_alpha.material.set_shader_param('color', secondary_color)
-	set_button_text(cur_col_ind)
+	set_button_text(_index)
 
 func hue_pos_changed(_index : int) -> void:
 	match _index:
@@ -224,7 +224,7 @@ func hue_pos_changed(_index : int) -> void:
 			secondary_color.h = _hue_pos.position.x / _hue.rect_size.x
 			secondary_stylebox.bg_color = secondary_color
 			_col.material.set_shader_param('hue', secondary_color.h)
-	set_button_text(cur_col_ind)
+	set_button_text(_index)
 
 func alpha_pos_changed(_index : int) -> void:
 	match _index:
@@ -234,7 +234,7 @@ func alpha_pos_changed(_index : int) -> void:
 		1:
 			secondary_color.a = _alpha_pos.position.x / _alpha.rect_size.x
 			secondary_stylebox.bg_color = secondary_color
-	set_button_text(cur_col_ind)
+	set_button_text(_index)
 
 func _on_col_gui_input(event : InputEvent, rect : ColorRect) -> void:
 	if !event is InputEventMouseButton:
@@ -248,15 +248,15 @@ func _on_col_gui_input(event : InputEvent, rect : ColorRect) -> void:
 				_col_pos.position = event.position
 				_hue_backup = cur_col.h
 				Input.warp_mouse_position(event.position)
-				col_pos_changed(cur_col_ind)
+				col_pos_changed(0)
 			elif rect == _hue:
 				hue_rect_pressed = true
 				_hue_pos.position.x = event.position.x
-				hue_pos_changed(cur_col_ind)
+				hue_pos_changed(0)
 			else:
 				alpha_rect_pressed = true
 				_alpha_pos.position.x = event.position.x
-				alpha_pos_changed(cur_col_ind)
+				alpha_pos_changed(0)
 			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 
 		if event.button_index == BUTTON_RIGHT:
@@ -268,15 +268,15 @@ func _on_col_gui_input(event : InputEvent, rect : ColorRect) -> void:
 					_col_pos.position = event.position
 					_hue_backup = cur_col.h
 					Input.warp_mouse_position(event.position)
-					col_pos_changed(cur_col_ind)
+					col_pos_changed(1)
 				elif rect == _hue:
 					hue_rect_pressed = true
 					_hue_pos.position.x = event.position.x
-					hue_pos_changed(cur_col_ind)
+					hue_pos_changed(1)
 				else:
 					alpha_rect_pressed = true
 					_alpha_pos.position.x = event.position.x
-					alpha_pos_changed(cur_col_ind)
+					alpha_pos_changed(1)
 				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 
 func set_use_secondary_color(_val : bool) -> void:
