@@ -9,7 +9,7 @@ uniform float hue;
 uniform vec4 color : hint_color;
 
 
-vec3 hsv(float x) {
+vec3 _hue(float x) {
 	float r; float g; float b;
 	float one = 1./6.; float two = 2./6.;float three = 0.5; float four = 4./6.; float five = 5./6.;
 	if (x >= 0. && x < one) {
@@ -28,24 +28,25 @@ vec3 hsv(float x) {
 	return vec3(r, g, b);
 }
 
-vec3 HueShift(vec3 _col, float hueAdjust) {
-    const vec3 k = vec3(0.57735, 0.57735, 0.57735);
-    float cosAngle = cos(hueAdjust);
-    return _col * cosAngle + cross(k, _col) * sin(hueAdjust) + k * dot(k, _col) * (1.0 - cosAngle);
+//found this code some where while googling , will add credits soon
+vec3 hue_shift(vec3 _col, float _hue_adjust) {
+    const vec3 k = vec3(0.57735);
+    float cos_angle = cos(_hue_adjust);
+    return _col * cos_angle + cross(k, _col) * sin(_hue_adjust) + k * dot(k, _col) * (1.0 - cos_angle);
 }
 
 void fragment() {
 	if (type == 0) {
 		vec2 uv = fract(UV * size / 4.);
-		uv -= 0.5;
-		vec3 checker = clamp(vec3(step(uv.x * uv.y, 0.)), vec3(0.4), vec3(0.6));
+		uv -= .5;
+		vec3 checker = clamp(vec3(step(uv.x * uv.y, 0.)), vec3(.4), vec3(.6));
 		COLOR.rgb = checker;
 	} else if (type == 1) {
-		vec3 gray = 1.0 - vec3(1.0, 1.0, 1.0) * UV.y;
-		vec3 col = 0.925 - vec3(0.0, 1.0, 1.0) * UV.x;
-		COLOR.rgb = gray * HueShift(col, hue * 6.283);
+		vec3 gray = 1. - vec3(1.) * UV.y;
+		vec3 col = 0.925 - vec3(0., 1., 1.) * UV.x;
+		COLOR.rgb = gray * hue_shift(col, hue * 6.283);
 	} else if (type == 2) {
-		COLOR.rgb = hsv(UV.x);
+		COLOR.rgb = _hue(UV.x);
 	} else {
 		COLOR = vec4(vec3(color.rgb), UV.x);
 	}

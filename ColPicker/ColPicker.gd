@@ -1,6 +1,6 @@
 tool
 extends VBoxContainer
-class_name ColPicker, 'res://ColPicker/ColPick.svg'
+class_name ColPicker, './ColPick.svg'
 
 const _fonts := [ '', '_hover', '_pressed']
 
@@ -109,6 +109,7 @@ func _ready() -> void:
 	yield(get_tree(), 'idle_frame')
 	cur_col = primary_color
 	emit_signal('resized')
+	set_button_text(0)
 
 func set_button_text(_index : int):
 	match _index:
@@ -116,17 +117,17 @@ func set_button_text(_index : int):
 			if ((primary_color.v > 0.5 && primary_font_col != 'Black') || (primary_color.v < 0.5 && primary_font_col != 'White')) || (primary_color.a < 0.5 && primary_font_col != 'Black'):
 				primary_font_col = 'Black' if primary_color.v > 0.5 or primary_color.a < 0.5 else 'White'
 				_alpha_pos.self_modulate = ColorN(primary_font_col)
-				_col_pos.self_modulate = ColorN(primary_font_col)
 				for i in range(3):
 					primary_button.add_color_override('font_color%s' % _fonts[i], ColorN(primary_font_col))
+			_col_pos.self_modulate = ColorN('Black') if primary_color.v > 0.5 else ColorN('White')
 			primary_button.text = '%s,%s,%s' % [int(primary_color.h * 360), int(primary_color.s * 100), int(primary_color.v * 100)]
 		1:
 			if ((secondary_color.v > 0.5 && secondary_font_col != 'Black') || (secondary_color.v < 0.5 && secondary_font_col != 'White')) || (secondary_color.a < 0.5 && secondary_font_col != 'Black'):
 				secondary_font_col = 'Black' if secondary_color.v > 0.5 or secondary_color.a < 0.5 else 'White'
 				_alpha_pos.self_modulate = ColorN(secondary_font_col)
-				_col_pos.self_modulate = ColorN(secondary_font_col)
 				for i in range(3):
 					secondary_button.add_color_override('font_color%s' % _fonts[i], ColorN(secondary_font_col))
+			_col_pos.self_modulate = ColorN('Black') if secondary_color.v > 0.5 else ColorN('White')
 			secondary_button.text = '%s,%s,%s' % [int(secondary_color.h * 360), int(secondary_color.s * 100), int(secondary_color.v * 100)]
 
 func _on_resize():
