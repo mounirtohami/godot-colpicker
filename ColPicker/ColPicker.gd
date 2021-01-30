@@ -61,7 +61,6 @@ func _ready() -> void:
 	_col_pos.texture = _indecator
 	_hue_pos.texture = _indecator
 	_alpha_pos.texture = _indecator
-	var _indecators := Node2D.new()
 	_col.add_child(_col_pos)
 	_hue.add_child(_hue_pos)
 	_hue_pos.self_modulate.v = 0.0
@@ -69,8 +68,11 @@ func _ready() -> void:
 	_alpha_pos.self_modulate.v = 0.0
 	set_primary_color(primary_color)
 	var checker_panel := StyleBoxFlat.new()
+	var _margin := MarginContainer.new()
+	_margin.add_constant_override('margin_top', 1)
 	buttons_container.add_stylebox_override('panel', checker_panel)
-	add_child(buttons_container)
+	add_child(_margin)
+	_margin.add_child(buttons_container)
 	buttons_container.material = _mat.duplicate()
 	buttons_container.material.set_shader_param('type', 0)
 	buttons_vbox.add_constant_override('separation', 0)
@@ -113,12 +115,16 @@ func set_button_text(_index : int):
 		0:
 			if ((primary_color.v > 0.5 && primary_font_col != 'Black') || (primary_color.v < 0.5 && primary_font_col != 'White')) || (primary_color.a < 0.5 && primary_font_col != 'Black'):
 				primary_font_col = 'Black' if primary_color.v > 0.5 or primary_color.a < 0.5 else 'White'
+				_alpha_pos.self_modulate = ColorN(primary_font_col)
+				_col_pos.self_modulate = ColorN(primary_font_col)
 				for i in range(3):
 					primary_button.add_color_override('font_color%s' % _fonts[i], ColorN(primary_font_col))
 			primary_button.text = '%s,%s,%s' % [int(primary_color.h * 360), int(primary_color.s * 100), int(primary_color.v * 100)]
 		1:
 			if ((secondary_color.v > 0.5 && secondary_font_col != 'Black') || (secondary_color.v < 0.5 && secondary_font_col != 'White')) || (secondary_color.a < 0.5 && secondary_font_col != 'Black'):
 				secondary_font_col = 'Black' if secondary_color.v > 0.5 or secondary_color.a < 0.5 else 'White'
+				_alpha_pos.self_modulate = ColorN(secondary_font_col)
+				_col_pos.self_modulate = ColorN(secondary_font_col)
 				for i in range(3):
 					secondary_button.add_color_override('font_color%s' % _fonts[i], ColorN(secondary_font_col))
 			secondary_button.text = '%s,%s,%s' % [int(secondary_color.h * 360), int(secondary_color.s * 100), int(secondary_color.v * 100)]
@@ -143,6 +149,7 @@ func set_primary_color(_val : Color) -> void:
 		_hue_pos.position.x = primary_color.h * _hue.rect_size.x 
 		_alpha_pos.position.x = primary_color.a * _hue.rect_size.x 
 		primary_stylebox.bg_color = primary_color
+		_alpha.material.set_shader_param('color', primary_color)
 		set_button_text(0)
 
 func set_secondary_color(_val : Color) -> void:
@@ -153,6 +160,7 @@ func set_secondary_color(_val : Color) -> void:
 		_hue_pos.position.x = secondary_color.h * _hue.rect_size.x 
 		_alpha_pos.position.x = secondary_color.a * _hue.rect_size.x 
 		secondary_stylebox.bg_color = secondary_color
+		_alpha.material.set_shader_param('color', secondary_color)
 		set_button_text(1)
 
 func _input(event: InputEvent) -> void:
@@ -196,12 +204,14 @@ func col_pos_changed(_index : int) -> void:
 			primary_color.h = _hue_backup
 			primary_stylebox.bg_color = primary_color
 			_col.material.set_shader_param('hue', primary_color.h)
+			_alpha.material.set_shader_param('color', primary_color)
 		1:
 			secondary_color.s = _col_pos.position.x / _col.rect_size.x
 			secondary_color.v = 1.0 - _col_pos.position.y / _col.rect_size.y
 			secondary_color.h = _hue_backup
 			secondary_stylebox.bg_color = secondary_color
 			_col.material.set_shader_param('hue', secondary_color.h)
+			_alpha.material.set_shader_param('color', secondary_color)
 	set_button_text(cur_col_ind)
 
 func hue_pos_changed(_index : int) -> void:
