@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "ColPicker",
 "language": "GDScript",
 "path": "res://ColPicker/ColPicker.gd"
-}, {
-"base": "Node",
-"class": "NodePathTracker",
-"language": "GDScript",
-"path": "res://addons/nodepath_tracker/NodePathTracker.gd"
 } ]
 _global_script_class_icons={
-"ColPicker": "res://ColPicker/ColPick.svg",
-"NodePathTracker": ""
+"ColPicker": "res://ColPicker/ColPick.svg"
 }
 
 [application]
@@ -30,10 +24,6 @@ config/name="Godot ColPicker"
 config/description="New OpenSource Color Picker For Godot Engine."
 run/main_scene="res://Control.tscn"
 config/icon="res://icon.png"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "nodepath_tracker" )
 
 [rendering]
 
