@@ -26,7 +26,6 @@ onready var secondary_stylebox := StyleBoxFlat.new()
 onready var buttons_container := PanelContainer.new()
 onready var buttons_vbox := VBoxContainer.new()
 
-
 var color_rect_pressed := false
 var hue_rect_pressed := false
 var alpha_rect_pressed := false
@@ -37,7 +36,6 @@ var cur_col : Color
 var primary_font_col := 'Black'
 var secondary_font_col := 'Black'
 
-# [HV : int(1 = h, 2 = v, 3 = h&v)] [_val = _value]
 func set_size_flags(_node, HV : int, _val : int) -> void:
 	match HV:
 		0:
@@ -319,3 +317,4 @@ func set_use_secondary_color(_val : bool) -> void:
 func _on_mouse_enter_exit(entered : bool) -> void:
 	mouse_in = entered
 	Input.set_custom_mouse_cursor(_cursor if entered else null, 0, Vector2(3, 3))
+
