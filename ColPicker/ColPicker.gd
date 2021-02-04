@@ -218,6 +218,10 @@ func col_pos_changed(_index : int) -> void:
 		secondary_color.v = 1.0 - _col_pos.position.y / _col.rect_size.y
 		secondary_color.h = _hue_backup
 		secondary_stylebox.bg_color = secondary_color
+	if col.v == 1 || col.s == 0:
+		_hue_pos.position.x = 0.0
+	else:
+		_hue_pos.position.x = col.h * _hue.rect_size.x
 	_col.material.set_shader_param('hue', col.h)
 	_alpha.material.set_shader_param('color', col)
 	set_button_text(_index)
@@ -225,11 +229,13 @@ func col_pos_changed(_index : int) -> void:
 func hue_pos_changed(_index : int) -> void:
 	var col = secondary_color if bool(_index) else primary_color
 	if !bool(_index):
-		primary_color.h = _hue_pos.position.x / _hue.rect_size.x
+		col.h = _hue_pos.position.x / _hue.rect_size.x
 		primary_stylebox.bg_color = col
+		primary_color = col
 	else:
-		secondary_color.h = _hue_pos.position.x / _hue.rect_size.x
+		col.h = _hue_pos.position.x / _hue.rect_size.x
 		secondary_stylebox.bg_color = col
+		secondary_color = col
 	_col.material.set_shader_param('hue', col.h)
 	_alpha.material.set_shader_param('color', col)
 	set_button_text(_index)
