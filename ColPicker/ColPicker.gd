@@ -132,12 +132,12 @@ func set_button_text(_index : int):
 	var but = secondary_button if bool(_index) else primary_button
 	if !bool(_index):
 		if ((col.v > 0.5 && primary_font_col != 'Black') || (col.v < 0.5 && primary_font_col != 'White')) || (col.a < 0.5 && primary_font_col != 'Black'):
-			primary_font_col = 'Black' if col.v > 0.5 or col.a < 0.5 else 'White'
+			primary_font_col = 'Black' if col.v > 0.5 || col.a < 0.5 else 'White'
 			for i in range(3):
 				but.add_color_override('font_color%s' % _fonts[i], ColorN(primary_font_col))
 	else:
 		if ((col.v > 0.5 && secondary_font_col != 'Black') || (col.v < 0.5 && secondary_font_col != 'White')) || (col.a < 0.5 && secondary_font_col != 'Black'):
-			secondary_font_col = 'Black' if col.v > 0.5 or col.a < 0.5 else 'White'
+			secondary_font_col = 'Black' if col.v > 0.5 || col.a < 0.5 else 'White'
 			for i in range(3):
 				but.add_color_override('font_color%s' % _fonts[i], ColorN(secondary_font_col))
 	_alpha_pos.self_modulate = ColorN(secondary_font_col if bool(_index) else primary_font_col)

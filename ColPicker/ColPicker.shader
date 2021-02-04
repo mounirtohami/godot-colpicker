@@ -28,7 +28,7 @@ vec3 _hue(float x) {
 	return vec3(r, g, b);
 }
 
-//found this code some where while googling , will add credits soon
+// Credits to viruseg on github
 vec3 hue_shift(vec3 _col, float _hue_adjust) {
     const vec3 k = vec3(0.57735);
     float cos_angle = cos(_hue_adjust);
