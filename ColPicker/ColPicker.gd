@@ -124,6 +124,7 @@ func _ready() -> void:
 	cur_col = primary_color
 	emit_signal('resized')
 	set_button_text(0)
+	update()
 
 func _on_button_pressed(_button : Button) -> void:
 	_update(0 if _button == primary_button else 1)
@@ -144,6 +145,7 @@ func set_button_text(_index : int):
 	_alpha_pos.self_modulate = ColorN(secondary_font_col if bool(_index) else primary_font_col)
 	_col_pos.self_modulate = ColorN('Black') if col.v > 0.5 else ColorN('White')
 	but.text = '%s,%s,%s' % [int(col.h * 360), int(col.s * 100), int(col.v * 100)]
+
 
 func _on_resize():
 	_checker.material.set_shader_param('size', _checker.rect_size)
@@ -191,7 +193,7 @@ func _input(event: InputEvent) -> void:
 	if !event is InputEventMouseButton && !event.is_pressed():
 		return
 	if event.is_pressed():
-		if event.button_index != BUTTON_LEFT or event.button_index != BUTTON_RIGHT:
+		if event.button_index != BUTTON_LEFT && event.button_index != BUTTON_RIGHT:
 			return
 	else:
 		if event.button_index != BUTTON_LEFT && event.button_index != BUTTON_RIGHT:
@@ -229,6 +231,7 @@ func hue_pos_changed(_index : int) -> void:
 		secondary_color.h = _hue_pos.position.x / _hue.rect_size.x
 		secondary_stylebox.bg_color = col
 	_col.material.set_shader_param('hue', col.h)
+	_alpha.material.set_shader_param('color', col)
 	set_button_text(_index)
 
 func alpha_pos_changed(_index : int) -> void:
