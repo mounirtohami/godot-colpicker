@@ -53,7 +53,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-primary_color = Color( 0.027451, 0.105882, 0.12549, 0.411765 )
+primary_color = Color( 0.360784, 0.631373, 0.698039, 0.462745 )
 secondary_color = Color( 0.701961, 0.027451, 0.027451, 0.454902 )
 
 [node name="PanelContainer2" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
