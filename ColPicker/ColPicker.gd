@@ -176,16 +176,16 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseMotion:
 		if color_rect_pressed:
-			_col_pos.position = event.position - rect_position
+			_col_pos.global_position = event.global_position 
 			_col_pos.position.x = clamp(_col_pos.position.x, _col.rect_position.x, _col.rect_size.x)
 			_col_pos.position.y = clamp(_col_pos.position.y, _col.rect_position.y, _col.rect_size.y)
 			col_pos_changed(cur_col_ind)
 		elif hue_rect_pressed:
-			_hue_pos.position.x = event.position.x - rect_position.x
+			_hue_pos.global_position.x = event.global_position.x
 			_hue_pos.position.x = clamp(_hue_pos.position.x, _hue.rect_position.x, _hue.rect_size.x - 0.001)
 			hue_pos_changed(cur_col_ind)
 		else:
-			_alpha_pos.position.x = event.position.x - rect_position.x
+			_alpha_pos.global_position.x = event.global_position.x
 			_alpha_pos.position.x = clamp(_alpha_pos.position.x, _alpha.rect_position.x, _alpha.rect_size.x)
 			alpha_pos_changed(cur_col_ind)
 	if !event is InputEventMouseButton && !event.is_pressed():
@@ -203,7 +203,7 @@ func _input(event: InputEvent) -> void:
 		warp_mouse(get_local_mouse_position())
 		if !mouse_in:
 			Input.set_custom_mouse_cursor(null)
-
+		
 func col_pos_changed(_index : int) -> void:
 	var col = secondary_color if bool(_index) else primary_color
 	if !bool(_index):
