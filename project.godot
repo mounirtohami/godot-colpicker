@@ -15,7 +15,7 @@ _global_script_classes=[ {
 "path": "res://addons/colpicker/ColPicker.gd"
 } ]
 _global_script_class_icons={
-"ColPicker": ""
+"ColPicker": "res://addons/colpicker/ColPick.png"
 }
 
 [application]
