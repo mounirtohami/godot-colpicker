@@ -1,6 +1,14 @@
 # Godot-specific ignores
 .import/
 .git/
+icon.png
+icon.png.import
+LICENSE
+README.md
+.gitignore
+project.godot
+default_env.tres
+Control.tscn
 
 # Mono-specific ignores
 .mono/

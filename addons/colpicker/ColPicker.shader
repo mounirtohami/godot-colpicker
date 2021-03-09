@@ -43,7 +43,7 @@ void fragment() {
 		COLOR.rgb = checker;
 	} else if (type == 1) {
 		vec3 gray = 1. - vec3(1.) * UV.y;
-		vec3 col = 0.925 - vec3(0., 1., 1.) * UV.x;
+		vec3 col = .85 - vec3(0., 1., 1.) * UV.x;
 		COLOR.rgb = gray * hue_shift(col, hue * 6.283);
 	} else if (type == 2) {
 		COLOR.rgb = _hue(UV.x);

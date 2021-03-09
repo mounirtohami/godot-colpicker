@@ -5,9 +5,10 @@ class_name ColPicker, './ColPick.svg'
 const _fonts := [ '', '_hover', '_pressed']
 
 export(Color) var primary_color = Color(1.0, 0.0, 0.0, 1.0) setget set_primary_color
-export(Color) var secondary_color = Color(1.0, 0.0, 0.0, 1.0) setget set_secondary_color
+export(Color) var secondary_color = Color(0.0, 0.0, 1.0, 1.0) setget set_secondary_color
 export(bool) var use_secondary_color = true setget set_use_secondary_color
 
+onready var popup_panel = preload('./PopUp.tscn').instance() as PopupPanel
 
 onready var _col := ColorRect.new()
 onready var _hue := ColorRect.new()
@@ -123,9 +124,27 @@ func _ready() -> void:
 	emit_signal('resized')
 	set_button_text(0)
 	update()
+	add_child(popup_panel)
+	popup_panel.hide()
+
+
+func _update_color(col : Color) -> void:
+	if bool(cur_col_ind):
+		set_secondary_color(col)
+	else:
+		set_primary_color(col)
+	_update(cur_col_ind)
 
 func _on_button_pressed(_button : Button) -> void:
-	_update(0 if _button == primary_button else 1)
+	cur_col_ind = 0 if _button == primary_button else 1
+	if popup_panel.get_child(0).get_child(0).is_connected('color_changed', self, '_update_color'):
+		popup_panel.get_child(0).get_child(0).disconnect('color_changed', self, '_update_color')
+	popup_panel.get_child(0).get_child(0).color = primary_color if _button == primary_button else secondary_color
+	popup_panel.get_child(0).get_child(0).connect('color_changed', self, '_update_color')
+	popup_panel.get_child(0).get_child(0).col.color = primary_color if _button == primary_button else secondary_color
+	popup_panel.popup( Rect2(get_global_mouse_position(), popup_panel.rect_size ))
+	_update(cur_col_ind)
+
 
 func set_button_text(_index : int):
 	var col = secondary_color if bool(_index) else primary_color
@@ -142,7 +161,7 @@ func set_button_text(_index : int):
 				but.add_color_override('font_color%s' % _fonts[i], ColorN(secondary_font_col))
 	_alpha_pos.self_modulate = ColorN(secondary_font_col if bool(_index) else primary_font_col)
 	_col_pos.self_modulate = ColorN('Black') if col.v > 0.5 else ColorN('White')
-	but.text = '%s,%s,%s' % [int(col.h * 360), int(col.s * 100), int(col.v * 100)]
+	but.text = '%s°%s,%s' % [round(col.h * 360), round(col.s * 100), round(col.v * 100)]
 
 
 func _on_resize():
@@ -150,11 +169,11 @@ func _on_resize():
 	buttons_container.material.set_shader_param('size', buttons_vbox.rect_size / 2)
 	_alpha.rect_size = _checker.rect_size
 	cur_col = secondary_color if bool(cur_col_ind) else primary_color
-	_col_pos.position = Vector2(cur_col.s * _col.rect_size.x, _col.rect_size.y - (cur_col.v * _col.rect_size.y))
-	_hue_pos.position = Vector2(cur_col.h * _hue.rect_size.x , _hue.rect_size.y/2)
-	_alpha_pos.position = Vector2(cur_col.a * _alpha.rect_size.x, _alpha.rect_size.y/2)
+	_col_pos.position = Vector2(round(cur_col.s * _col.rect_size.x), _col.rect_size.y - round(cur_col.v * _col.rect_size.y))
+	_hue_pos.position = Vector2(round(cur_col.h * _hue.rect_size.x) , _hue.rect_size.y/2)
+	_alpha_pos.position = Vector2(round(cur_col.a * _alpha.rect_size.x), _alpha.rect_size.y/2)
 	yield(get_tree().create_timer(0.1), 'timeout')
-	if _col_pos.position != Vector2(cur_col.s * _col.rect_size.x, _col.rect_size.y - (cur_col.v * _col.rect_size.y)):
+	if _col_pos.position != Vector2(round(cur_col.s * _col.rect_size.x), _col.rect_size.y - round(cur_col.v * _col.rect_size.y)):
 		emit_signal('resized')
 
 func set_primary_color(_val : Color) -> void:
@@ -188,7 +207,7 @@ func _input(event: InputEvent) -> void:
 			_alpha_pos.global_position.x = event.global_position.x
 			_alpha_pos.position.x = clamp(_alpha_pos.position.x, _alpha.rect_position.x, _alpha.rect_size.x)
 			alpha_pos_changed(cur_col_ind)
-	if !event is InputEventMouseButton && !event.is_pressed():
+	if !event is InputEventMouseButton:
 		return
 	if event.is_pressed():
 		if event.button_index != BUTTON_LEFT && event.button_index != BUTTON_RIGHT:
@@ -219,7 +238,7 @@ func col_pos_changed(_index : int) -> void:
 	if col.v == 1 || col.s == 0:
 		_hue_pos.position.x = 0.0
 	else:
-		_hue_pos.position.x = col.h * _hue.rect_size.x
+		_hue_pos.position.x = round(col.h * _hue.rect_size.x)
 	_col.material.set_shader_param('hue', col.h)
 	_alpha.material.set_shader_param('color', col)
 	set_button_text(_index)
@@ -300,10 +319,10 @@ func _on_col_gui_input(event : InputEvent, rect : ColorRect) -> void:
 
 func _update(_index : int) -> void:
 	var col = secondary_color if bool(_index) else primary_color 
-	_col_pos.position = Vector2(col.s * _col.rect_size.x, (1.0 - col.v) * _col.rect_size.y)
+	_col_pos.position = Vector2(round(col.s * _col.rect_size.x), round((1.0 - col.v) * _col.rect_size.y))
 	_col.material.set_shader_param('hue', col.h)
-	_hue_pos.position.x = col.h * _hue.rect_size.x
-	_alpha_pos.position.x = col.a * _alpha.rect_size.x
+	_hue_pos.position.x = round(col.h * _hue.rect_size.x)
+	_alpha_pos.position.x = round(col.a * _alpha.rect_size.x)
 	_alpha.material.set_shader_param('color', col)
 	set_button_text(_index)
 
