@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/colpicker/default.theme" type="Theme" id=1]
+[ext_resource path="res://addons/colpicker/popup.gd" type="Script" id=2]
+
+[node name="PopupPanel" type="PopupPanel"]
+visible = true
+margin_right = 271.0
+margin_bottom = 107.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="."]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 270.0
+margin_bottom = 106.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="ColorPicker" parent="Margin"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 267.0
+margin_bottom = 103.0
+presets_enabled = false
+presets_visible = false
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
