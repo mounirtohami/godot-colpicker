@@ -31,21 +31,21 @@ __meta__ = {
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
 margin_right = 1024.0
-margin_bottom = 88.0
+margin_bottom = 233.0
 split_offset = 83
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
-margin_right = 85.0
-margin_bottom = 88.0
+margin_right = 181.0
+margin_bottom = 233.0
 
 [node name="ColPicker" type="VBoxContainer" parent="VSplitContainer/HSplitContainer/PanelContainer"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 84.0
-margin_bottom = 87.0
+margin_right = 180.0
+margin_bottom = 232.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
@@ -57,14 +57,14 @@ primary_color = Color( 0.360784, 0.631373, 0.698039, 0.462745 )
 secondary_color = Color( 0.701961, 0.027451, 0.027451, 0.454902 )
 
 [node name="PanelContainer2" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
-margin_left = 97.0
+margin_left = 193.0
 margin_right = 1024.0
-margin_bottom = 88.0
+margin_bottom = 233.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="VSplitContainer"]
-margin_top = 100.0
+margin_top = 245.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
