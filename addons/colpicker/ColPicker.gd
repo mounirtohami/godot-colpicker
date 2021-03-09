@@ -1,6 +1,6 @@
 tool
 extends VBoxContainer
-class_name ColPicker, './ColPick.svg'
+class_name ColPicker, './ColPick.png'
 
 const _fonts := [ '', '_hover', '_pressed']
 
